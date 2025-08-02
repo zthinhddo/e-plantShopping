@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../styles/ProductList.css'
 import CartItem from './CartItem';
+import ProductItem from './ProductItem'
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from '../stores/CartSlice'
 
@@ -290,9 +291,9 @@ function ProductList({ onHomeClick }) {
         <div className="product-grid">
           {
             plantsArray.map((plantCategory, plantCategoryIndex) => (
-              <>
-                <div className="plantname_heading" key={`plant-category-${plantCategoryIndex + 1}`} id={`plant-category-${plantCategoryIndex + 1}`}>
-                  <div className="plant_heading">
+              <div key={`plant-category-${plantCategoryIndex + 1}`}>
+                <div className="plantname_heading" >
+                  <div className="plant_heading" id={`plant-category-${plantCategoryIndex + 1}`}>
                     <h1>
                       {plantCategory.category}
                     </h1>
@@ -301,17 +302,11 @@ function ProductList({ onHomeClick }) {
                 <div className="product-list">
                   {
                     plantCategory.plants.map((plant, plantIndex) => (
-                      <div className="product-card" key={`product-${plantCategoryIndex + 1}-${plantIndex + 1}`} id={`product-${plantCategoryIndex + 1}-${plantIndex + 1}`}>
-                        <div className="product-title">{plant.name}</div>
-                        <div className="product-image"><img src={plant.image}></img></div>
-                        <div className="product-price">{plant.price}</div>
-                        <div className="product-description"><p><i>{plant.description}</i></p></div>
-                        <button className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
-                      </div>
+                      <ProductItem plant={plant} handleAddToCart={handleAddToCart} index={plantIndex} key={`product__item_${plantIndex}`} />
                     ))
                   }
                 </div>
-              </>
+              </div>
             ))
           }
         </div>
