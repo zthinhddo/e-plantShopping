@@ -9,11 +9,14 @@ export const CartSlice = createSlice({
     addItem: (state, action) => {
       state.items.push(action.payload);
     },
-    removeItem: () => {
+    removeItem: (state, action) => {
+      const removeItem = state.items.indexOf(item => item.name === action.payload.name);
+      state.items.splice(removeItem, 1);
+
     },
-    updateQuantity: () => {
-
-
+    updateQuantity: (state, action) => {
+      const updateItemIndex = state.items.indexOf(item => item.name === action.payload.name);
+      state.items[updateItemIndex].quantity = action.payload.quantity;
     },
   },
 });

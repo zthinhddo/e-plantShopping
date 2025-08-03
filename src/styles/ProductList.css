@@ -136,11 +136,17 @@ body {
 .tag_home_link h3{
     font-size: 30px;
 }
+.cart_button {
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+    justify-content: right;
+}
 .tag a{
     text-decoration: none;
 }
 .tag {
-    width: 400px;
+    width: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
