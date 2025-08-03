@@ -140,7 +140,6 @@ body {
     color: white;
     font-size: 30px;
     text-decoration: none;
-    justify-content: right;
 }
 .tag a{
     text-decoration: none;
@@ -169,6 +168,7 @@ body {
 .cart{
     color: white;
     display: flex;
+  justify-content: end;
 }
 .cart_quantity_count{
     margin-top: 16px;

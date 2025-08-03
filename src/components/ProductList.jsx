@@ -12,7 +12,7 @@ function ProductList({ onHomeClick }) {
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
   //const [addedToCart, setAddedToCart] = useState([]);
 
-  console.log("Current items in cart: ", cartItems);
+  console.log("Current items in cart: ", showCart);
 
   const plantsArray = [
     {
@@ -260,11 +260,13 @@ function ProductList({ onHomeClick }) {
 
   const handleContinueShopping = (e) => {
     e.preventDefault();
+    console.log("Continue Shopping clicked");
     setShowCart(false);
   };
 
   function handleAddToCart(productInfo) {
-    dispatch(addItem(productInfo));
+    dispatch(addItem({ ...productInfo, quantity: 1 }));
+    window.alert("Product added to cart successfully!");
   }
 
   // function handleRemoveFromCart(productInfo) {
