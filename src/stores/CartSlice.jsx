@@ -10,8 +10,8 @@ export const CartSlice = createSlice({
       state.items.push(action.payload);
     },
     removeItem: (state, action) => {
-      const removeItem = state.items.indexOf(item => item.name === action.payload.name);
-      state.items.splice(removeItem, 1);
+      const removeItemIndex = state.items.map(({ name }) => name).indexOf(action.payload.name);
+      state.items.splice(removeItemIndex, 1);
     },
     incrementQuantity: (state, action) => {
       const itemIndex = state.items.findIndex(item => item.name === action.payload.name);
