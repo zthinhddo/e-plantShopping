@@ -2,20 +2,31 @@ import { useSelector, useDispatch } from 'react-redux';
 import '../styles/CartItem.css';
 import { removeItem, incrementQuantity, decrementQuantity } from '../stores/CartSlice';
 
-const CartItem = ({ onContinueShopping }) => {
+const CartItem = ({ onContinueShopping, setShowComingSoonPage }) => {
   const cart = useSelector(state => state.cart.items);
   console.log('cart: ', cart);
   const dispatch = useDispatch();
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
-
+    let total = 0;
+    if (cart.length) {
+      cart.reduce((previous, current) => {
+        total = previous + (current.cost * current.quantity);
+        return total;
+      }, total)
+    }
+    return total.toFixed(2);
   };
+
   const handleContinueShopping = (e) => {
+    console.log('e = ', e);
     onContinueShopping(e);
   };
 
-
+  const setOpenComingSoonPage = (e) => {
+    setShowComingSoonPage(e);
+  }
 
   const handleIncrement = (item) => {
     dispatch(incrementQuantity(item));
@@ -60,9 +71,9 @@ const CartItem = ({ onContinueShopping }) => {
       </div>
       <div style={{ marginTop: '20px', color: 'black' }} className='total_cart_amount'></div>
       <div className="continue_shopping_btn">
-        <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
+        <button className="get-started-button" onClick={handleContinueShopping}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button className="get-started-button1" onClick={setOpenComingSoonPage}>Checkout</button>
       </div>
     </div>
   );

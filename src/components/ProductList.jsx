@@ -4,15 +4,18 @@ import CartItem from './CartItem';
 import ProductItem from './ProductItem'
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem, removeItem, updateQuantity } from '../stores/CartSlice'
+import ComingSoon from './ComingSoon';
 
 function ProductList({ onHomeClick }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const [showCart, setShowCart] = useState(false);
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
+  const [isShowComingSoonPage, setIsShowComingSoonPage] = useState(false);
   //const [addedToCart, setAddedToCart] = useState([]);
 
-  console.log("Current items in cart: ", showCart);
+
+  console.log("Current items in cart: ", cartItems);
 
   const plantsArray = [
     {
@@ -250,14 +253,20 @@ function ProductList({ onHomeClick }) {
   };
 
   const handleContinueShopping = (e) => {
+    console.log('from Product list e = ', e);
     e.preventDefault();
-    console.log("Continue Shopping clicked");
     setShowCart(false);
+    setIsShowComingSoonPage(false);
   };
+
+  const setShowComingSoonPage = (e) => {
+    e.preventDefault();
+    setShowCart(false);
+    setIsShowComingSoonPage(true);
+  }
 
   function handleAddToCart(productInfo) {
     dispatch(addItem({ ...productInfo, quantity: 1 }));
-    window.alert("Product added to cart successfully!");
   }
 
   // function handleRemoveFromCart(productInfo) {
@@ -285,13 +294,25 @@ function ProductList({ onHomeClick }) {
 
           </div>
           <div> <a href="#" onClick={(e) => handlePlantsClick(e)} style={styleA}>Plants</a></div>
-          <div style={{ width: "300px" }}> <a href="#" onClick={(e) => handleCartClick(e)} className='cart_button'><h1 className='cart'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" id="mainIconPathAttribute"></path></svg></h1></a></div>
+          <div style={{ width: "300px" }}>
+            <a href="#" onClick={(e) => handleCartClick(e)} className='cart_button'>
+              <h1 className='cart'>
+                <div className='cart_quantity_count'>
+                  {cartItems ? cartItems.length : 0}
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle>
+                  <path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" id="mainIconPathAttribute">
+                  </path>
+                </svg>
+              </h1>
+            </a>
+          </div>
         </div>
       </div>
       {!showCart ? (
         <div className="product-grid">
           {
-            plantsArray.map((plantCategory, plantCategoryIndex) => (
+            !isShowComingSoonPage ? (plantsArray.map((plantCategory, plantCategoryIndex) => (
               <div key={`plant-category-${plantCategoryIndex + 1}`}>
                 <div className="plantname_heading" >
                   <div className="plant_heading" id={`plant-category-${plantCategoryIndex + 1}`}>
@@ -308,11 +329,12 @@ function ProductList({ onHomeClick }) {
                   }
                 </div>
               </div>
-            ))
+            )))
+              : <ComingSoon onContinueShopping={handleContinueShopping} />
           }
         </div>
       ) : (
-        <CartItem onContinueShopping={handleContinueShopping} />
+        <CartItem onContinueShopping={handleContinueShopping} setShowComingSoonPage={setShowComingSoonPage} />
       )
       }
     </div >
