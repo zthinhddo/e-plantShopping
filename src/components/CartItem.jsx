@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import '../styles/CartItem.css';
-import { removeItem, incrementQuantity, decrementQuantity } from '../stores/CartSlice';
+import { removeItem, incrementQuantity, decrementQuantity } from '../stores/actions/CartActions';
 
 const CartItem = ({ onContinueShopping, setShowComingSoonPage }) => {
   const cart = useSelector(state => state.cart.items);
@@ -78,6 +78,11 @@ const CartItem = ({ onContinueShopping, setShowComingSoonPage }) => {
     </div>
   );
 };
+
+CartItem.propTypes = {
+  onContinueShopping: () => { },
+  setShowComingSoonPage: () => { },
+}
 
 export default CartItem;
 

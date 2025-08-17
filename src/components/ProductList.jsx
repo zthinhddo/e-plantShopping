@@ -3,19 +3,14 @@ import '../styles/ProductList.css'
 import CartItem from './CartItem';
 import ProductItem from './ProductItem'
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem, removeItem, updateQuantity } from '../stores/CartSlice'
 import ComingSoon from './ComingSoon';
+import { addItem } from '../stores/actions/CartActions';
 
 function ProductList({ onHomeClick }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const [showCart, setShowCart] = useState(false);
-  const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
   const [isShowComingSoonPage, setIsShowComingSoonPage] = useState(false);
-  //const [addedToCart, setAddedToCart] = useState([]);
-
-
-  console.log("Current items in cart: ", cartItems);
 
   const plantsArray = [
     {
@@ -248,7 +243,6 @@ function ProductList({ onHomeClick }) {
   };
   const handlePlantsClick = (e) => {
     e.preventDefault();
-    setShowPlants(true); // Set showAboutUs to true when "About Us" link is clicked
     setShowCart(false); // Hide the cart when navigating to About Us
   };
 
@@ -268,14 +262,6 @@ function ProductList({ onHomeClick }) {
   function handleAddToCart(productInfo) {
     dispatch(addItem({ ...productInfo, quantity: 1 }));
   }
-
-  // function handleRemoveFromCart(productInfo) {
-  //   dispatch(removeItem(productInfo));
-  // }
-  //
-  // function handleUpdateQuantityFromCart(productInfo) {
-  //   dispatch(updateQuantity(productInfo));
-  // }
 
   return (
     <div>
